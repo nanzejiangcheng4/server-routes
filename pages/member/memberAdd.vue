@@ -17,11 +17,11 @@ const pending = ref(false);
 const onAdd = async (): Promise<void> => {
   pending.value = true;
   try {
-    const result = await $fetch("/api/addMemberInfo", {
+    const asyncData = await $fetch("/member-management/members", {
       method: "POST",
       body: member,
     });
-    if (result != null && result.result == 1) {
+    if (asyncData != null && asyncData.result == 1) {
       router.push({ name: "member-memberList" });
     }
   } finally {
