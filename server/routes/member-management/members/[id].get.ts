@@ -1,10 +1,16 @@
 import type { Member, ReturnJSONMembers } from "@/interfaces";
-import { createMemberList } from "@/membersDB";
 
-export default defineEventHandler((event): ReturnJSONMembers => {
+export default defineEventHandler(async (event): Promise<ReturnJSONMembers> => {
   const params = event.context.params;
   // memberDB.tsを利用して会員リスト情報Mapオブジェクトを生成
-  const memberList = createMemberList();
+  let memberList = new Map<number, Member>();
+  const storage = useStorage();
+  const memberListStorage = await storage.getItem(
+    "local:member-management_members"
+  );
+  if (memberListStorage != undefined) {
+    memberList = new Map<number, Member>(memberListStorage as any);
+  }
   // ルートパラメータのidを数値変換
   const idNo = Number(params!.id);
   // ルートパラメータに該当する会員情報オブジェクトを取得

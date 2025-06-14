@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>サーバーサイドルーティングサンプル</h1>
+    <h1>サーバーストレージサンプル</h1>
   </header>
   <main>
     <slot />
